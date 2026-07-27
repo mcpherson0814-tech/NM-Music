@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nathan McPherson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --night-sky:    #191F2C;
+      --night-mid:    #232C3E;
+      --deep-brown:   #1E1208;
+      --parchment:    #F0E3C8;
+      --parchment-dim:#C8B898;
+      --gold:         #C49830;
+      --gold-hover:   #D4AA40;
+      --sage:         #7B9987;
+      --dusty-rose:   #C4856A;
+      --moon:         #F5EDDB;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--deep-brown);
+      color: var(--parchment);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.4rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(25,31,44,0.92) 0%, transparent 100%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--moon);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--moon); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--night-sky);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 9rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* warm glow behind album */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 65%, rgba(196,152,48,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 9vw, 6.5rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--moon);
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--parchment-dim);
+      margin-bottom: 3.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-album {
+      width: min(400px, 82vw);
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 3px;
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(245,237,219,0.06);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-cta {
+      margin-top: 2.8rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 0.78rem 2.1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.22s ease;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--deep-brown);
+    }
+    .btn-primary:hover {
+      background: var(--gold-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--moon);
+      border: 1px solid rgba(245,237,219,0.35);
+    }
+    .btn-outline:hover {
+      border-color: rgba(245,237,219,0.75);
+      background: rgba(245,237,219,0.04);
+    }
+
+    /* ── SECTION SHARED ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--moon);
+    }
+
+    /* ── MUSIC SECTION ── */
+    .music { background: var(--deep-brown); }
+
+    .music-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .music-album {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 3px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.55);
+    }
+
+    .music-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .album-title-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--moon);
+      line-height: 1.2;
+    }
+
+    .album-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.7;
+    }
+
+    .music-body {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--parchment-dim);
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+      margin: 1rem 0;
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about { background: var(--night-mid); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 4.5rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    /* photo note: swap this out when real promo shots come in */
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 3px;
+      filter: sepia(25%) brightness(0.92) saturate(0.85) contrast(1.05);
+      display: block;
+    }
+
+    .photo-caption {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.45;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding-top: 0.5rem;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--parchment-dim);
+    }
+
+    /* ── CONNECT SECTION ── */
+    .connect { background: var(--deep-brown); }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.5rem 1.75rem;
+      background: rgba(245,237,219,0.03);
+      border: 1px solid rgba(245,237,219,0.09);
+      border-radius: 3px;
+      text-decoration: none;
+      color: var(--moon);
+      transition: background 0.22s, border-color 0.22s, transform 0.22s;
+    }
+
+    .social-card:hover {
+      background: rgba(245,237,219,0.07);
+      border-color: rgba(245,237,219,0.22);
+      transform: translateY(-2px);
+    }
+
+    .social-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .social-icon.yt  { background: rgba(255,60,60,0.12); }
+    .social-icon.ig  { background: rgba(196,133,106,0.12); }
+
+    .social-icon svg { width: 22px; height: 22px; }
+
+    .social-meta { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .social-platform {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.55;
+    }
+
+    .social-handle {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--moon);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(0,0,0,0.35);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.45;
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.25;
+      margin-top: 0.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      nav { padding: 1.2rem 1.5rem; }
+
+      .music-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .about-grid { grid-template-columns: 1fr; }
+
+      .about-photo { aspect-ratio: 4/3; }
+
+      .social-grid { grid-template-columns: 1fr; }
+
+      .section { padding: 4.5rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { gap: 1.2rem; }
+      .nav-links a { font-size: 0.65rem; }
+      .hero-cta { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-name">Nathan McPherson</a>
+    <ul class="nav-links">
+      <li><a href="#music">Music</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <p class="hero-eyebrow">Indie Country &nbsp;&bull;&nbsp; Americana</p>
+    <h1 class="hero-name">Nathan McPherson</h1>
+    <!-- tagline: placeholder — swap with something Nathan likes -->
+    <p class="hero-tagline">Songs from the Southwest</p>
+    <img
+      src="album-cover.png"
+      alt="Better Never Than Late — Nathan McPherson"
+      class="hero-album"
+    >
+    <div class="hero-cta">
+      <a href="https://samply.app/p/pI9LafTv84G3oXrmlrvf?si=5OfcjsxVqNXDVr8bxVhvRU5yERb2"
+         target="_blank" rel="noopener" class="btn btn-primary">
+        Listen Now
+      </a>
+      <a href="#connect" class="btn btn-outline">Follow Along</a>
+    </div>
+  </section>
+
+
+  <!-- MUSIC -->
+  <section class="section music" id="music">
+    <div class="section-inner">
+      <p class="eyebrow">Latest Release</p>
+      <h2 class="section-heading">The Music</h2>
+
+      <div class="music-grid">
+        <img
+          src="album-cover.png"
+          alt="Better Never Than Late album cover"
+          class="music-album"
+        >
+        <div class="music-text">
+          <p class="album-meta">Album &nbsp;·&nbsp; 2025</p>
+          <h3 class="album-title-display">Better Never<br>Than Late</h3>
+          <div class="divider"></div>
+          <!-- bio copy: placeholder — have Nathan refine this -->
+          <p class="music-body">
+            A debut shaped by desert skies, long drives, and the quiet space
+            between leaving and arriving. <em>Better Never Than Late</em> finds
+            Nathan McPherson writing songs that feel unhurried and honest —
+            somewhere between classic country and something entirely his own.
+          </p>
+          <a href="https://samply.app/p/pI9LafTv84G3oXrmlrvf?si=5OfcjsxVqNXDVr8bxVhvRU5yERb2"
+             target="_blank" rel="noopener" class="btn btn-primary"
+             style="align-self: flex-start;">
+            Stream Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <div class="section-inner">
+      <p class="eyebrow">About</p>
+      <h2 class="section-heading">Nathan McPherson</h2>
+
+      <div class="about-grid">
+        <div class="about-photo-wrap">
+          <!-- photo: placeholder — replace with proper promo shots when ready -->
+          <img
+            src="Placeholder Nathan Image.png"
+            alt="Nathan McPherson"
+            class="about-photo"
+          >
+          <p class="photo-caption">Nathan McPherson &nbsp;·&nbsp; 2025</p>
+        </div>
+
+        <div class="about-text">
+          <!-- all bio copy is placeholder — Nathan should rewrite in his own voice -->
+          <p>
+            Nathan McPherson is an indie country and Americana songwriter whose
+            music lives in the dust and wide light of the American Southwest. His
+            songs are built on honest storytelling, fingerpicked melodies, and a
+            quiet conviction that the best moments often go unannounced.
+          </p>
+          <p>
+            Drawing on influences that range from classic country to folk and
+            beyond, Nathan writes music that's rooted but restless — the kind
+            of songs that feel at home on a long drive with no particular
+            destination.
+          </p>
+          <p>
+            <em>Better Never Than Late</em>, his debut release, is out now.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CONNECT -->
+  <section class="section connect" id="connect">
+    <div class="section-inner">
+      <p class="eyebrow">Stay Connected</p>
+      <h2 class="section-heading">Follow Along</h2>
+
+      <div class="social-grid">
+
+        <a href="https://youtube.com/@nathanmcpherson-music?si=N5reiZ0_C3fEOUdm"
+           target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon yt">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58a2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#FF4444"/>
+              <polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/>
+            </svg>
+          </div>
+          <div class="social-meta">
+            <span class="social-platform">YouTube</span>
+            <span class="social-handle">@nathanmcpherson-music</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/nathan.mcpherson.music"
+           target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon ig">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="#C4856A" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="#C4856A" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="#C4856A"/>
+            </svg>
+          </div>
+          <div class="social-meta">
+            <span class="social-platform">Instagram</span>
+            <span class="social-handle">@nathan.mcpherson.music</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-name">Nathan McPherson</p>
+    <p class="footer-copy">&copy; 2025 &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>
