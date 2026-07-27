@@ -273,14 +273,13 @@
       position: relative;
     }
 
-    /* photo note: swap this out when real promo shots come in */
     .about-photo {
       width: 100%;
-      aspect-ratio: 3/4;
+      aspect-ratio: 4/3;
       object-fit: cover;
-      object-position: top center;
+      object-position: center;
       border-radius: 3px;
-      filter: sepia(25%) brightness(0.92) saturate(0.85) contrast(1.05);
+      filter: brightness(0.95) saturate(0.92);
       display: block;
     }
 
@@ -404,7 +403,6 @@
 
       .about-grid { grid-template-columns: 1fr; }
 
-      .about-photo { aspect-ratio: 4/3; }
 
       .social-grid { grid-template-columns: 1fr; }
 
@@ -496,7 +494,7 @@
         <div class="about-photo-wrap">
           <!-- photo: placeholder — replace with proper promo shots when ready -->
           <img
-            src="Placeholder Nathan Image.png"
+            src="IMG_4531.jpg"
             alt="Nathan McPherson"
             class="about-photo"
           >
