@@ -1,0 +1,77 @@
+NATHAN MCPHERSON MUSIC WEBSITE — PROJECT CONTEXT
+=================================================
+Last updated: July 27, 2026
+Built by: Kyle McPherson (kyle@fetch.ly) via Claude Code
+
+
+OVERVIEW
+--------
+Single-page HTML promo site for Nathan McPherson, indie country/americana artist.
+No framework, no backend — plain HTML + CSS. Intentionally simple for easy hosting
+and low cost. Hosted on Vercel, source on GitHub.
+
+GitHub:  https://github.com/Kadllama/nathan-mcpherson-music  (public repo, Kyle's personal account)
+Vercel:  Deployed under Nathan's Vercel team (Hobby plan, free tier)
+Domain:  nathanmcphersonmusic.com — not yet purchased (~$11/year through Vercel)
+
+
+CURRENT STATE
+-------------
+- Hero section: album cover + artist name + Listen Now CTA
+- Music section: album detail + Samply stream link
+- About section: placeholder photo (needs real promo shots)
+- Connect section: YouTube and Instagram social cards
+- Album cover: album-cover.png (ChatGPT-generated, close to final)
+- Placeholder photo: Placeholder Nathan Image.png (weak, needs replacing)
+
+
+KNOWN ISSUES / NOT YET FIXED
+-----------------------------
+- About photo crops to just Nathan's head on mobile — acceptable for now since
+  it's a placeholder anyway; revisit when real promo shots come in
+- Connect section social cards are not "follow" buttons in a functional sense —
+  they just link out. Future: embed actual follow widgets if desired
+
+
+PENDING — WAITING ON NATHAN
+----------------------------
+- Real promo/press photos (replace Placeholder Nathan Image.png)
+- Final confirmed album cover (replace album-cover.png)
+- Bio copy in his own voice (current text is placeholder — see index.html comments)
+- Tagline / artist statement for hero section ("Songs from the Southwest" is placeholder)
+- Link to purchase/buy the record (Bandcamp, Apple Music, etc.) — add a button in Music section
+- Any additional social links or press mentions
+
+
+FUTURE WORK (NOT URGENT)
+------------------------
+- SEO: meta description, Open Graph tags (og:title, og:image, og:description),
+  Twitter card tags — best done once live on real domain with final content
+- Analytics: add Vercel Analytics or a lightweight option like Plausible
+  (privacy-friendly, ~$9/mo) once there's real traffic to measure
+- Testing: not needed yet at this scale; if site grows in complexity,
+  consider basic visual regression testing (Playwright screenshots)
+- Tour/shows section: add if Nathan starts playing live dates
+- Mailing list: a simple email signup (Mailchimp embed or similar) if he
+  wants to build a direct audience
+- Record purchase link: add a "Buy" button in the Music section once
+  distribution is set up (Bandcamp, DistroKid store, etc.)
+- Press/EPK section: one-pager with bio, hi-res photos, contact for booking
+
+
+TECH NOTES
+----------
+- No build step — Vercel deploys the HTML file directly (preset: Other)
+- Root directory: ./  (all files at repo root)
+- To redeploy: just push a commit to the main branch on GitHub — Vercel
+  auto-deploys on every push
+- SSL: handled automatically by Vercel (free, auto-renews)
+- To add domain when purchased: Vercel dashboard → Project → Settings → Domains
+
+
+COST SUMMARY
+------------
+- Domain:  ~$11/year (when purchased)
+- Hosting: $0 (Vercel Hobby free tier)
+- SSL:     $0 (included with Vercel)
+- Total:   ~$11/year
