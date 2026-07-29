@@ -424,6 +424,108 @@
       .nav-links a { font-size: 0.65rem; }
       .hero-cta { flex-direction: column; align-items: center; }
     }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--night-mid);
+      border: 1px solid rgba(245,237,219,0.1);
+      border-radius: 3px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--parchment-dim);
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.55;
+      padding: 0;
+      transition: opacity 0.2s;
+    }
+    .modal-close:hover { opacity: 1; }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--moon);
+      margin-bottom: 1.75rem;
+    }
+
+    .form-group { margin-bottom: 1.2rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment-dim);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(245,237,219,0.04);
+      border: 1px solid rgba(245,237,219,0.15);
+      border-radius: 2px;
+      padding: 0.75rem 1rem;
+      color: var(--moon);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: rgba(196,152,48,0.5); }
+    .form-input::placeholder { color: var(--parchment-dim); opacity: 0.35; }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .contact-success {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      color: var(--parchment-dim);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .contact-success strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--moon);
+      margin-bottom: 0.5rem;
+    }
+
+    .connect-cta {
+      margin-top: 2rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -571,6 +673,10 @@
         </a>
 
       </div>
+
+      <div class="connect-cta">
+        <button class="btn btn-outline" onclick="openModal()">Get in Touch</button>
+      </div>
     </div>
   </section>
 
@@ -580,6 +686,79 @@
     <p class="footer-name">Nathan McPherson</p>
     <p class="footer-copy">&copy; 2026 &nbsp;·&nbsp; All rights reserved</p>
   </footer>
+
+
+  <!-- CONTACT MODAL -->
+  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <p class="eyebrow" style="margin:0">Send a Message</p>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <h3 class="modal-title">Get in Touch</h3>
+      <form id="contactForm" onsubmit="submitContact(event)">
+        <div class="form-group">
+          <label class="form-label" for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" class="form-input" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" class="form-input" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" class="form-input form-textarea" required placeholder="Say hello..."></textarea>
+        </div>
+        <button type="submit" id="contactSubmit" class="btn btn-primary" style="width:100%;justify-content:center;">Send</button>
+      </form>
+      <div id="contactSuccess" class="contact-success" style="display:none">
+        <strong>Message sent.</strong>
+        Nathan will be in touch.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('contactModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('contactModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeModalOnOverlay(e) {
+      if (e.target === document.getElementById('contactModal')) closeModal();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+    async function submitContact(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contactSubmit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://formspree.io/f/xlgqvjjp', {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('contactForm').style.display = 'none';
+          document.getElementById('contactSuccess').style.display = 'block';
+        } else {
+          btn.textContent = 'Send';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        btn.textContent = 'Send';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again.');
+      }
+    }
+  </script>
 
 </body>
 </html>
