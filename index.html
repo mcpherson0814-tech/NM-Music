@@ -177,8 +177,8 @@
       overflow: hidden;
       transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-    .vinyl-wrap:hover .vinyl-sleeve { transform: translateX(-8%) rotate(-2deg); }
-    .vinyl-wrap:hover .vinyl-record { --slide: 1; }
+    .vinyl-wrap.vinyl-open .vinyl-sleeve { transform: translateX(-8%) rotate(-2deg); }
+    .vinyl-wrap.vinyl-open .vinyl-record { --slide: 1; }
     /* ── END VINYL EFFECT CSS ── */
 
     .hero-cta {
@@ -816,6 +816,22 @@
     (function () {
       const record = document.getElementById('heroRecord');
       if (!record) return;
+
+      const vinylWrap = record.closest('.vinyl-wrap');
+      const sleeve = vinylWrap.querySelector('.vinyl-sleeve');
+      let isOpen = false;
+
+      function setOpen(open) {
+        isOpen = open;
+        vinylWrap.classList.toggle('vinyl-open', open);
+      }
+
+      // Desktop: hover open/close
+      vinylWrap.addEventListener('mouseenter', () => setOpen(true));
+      vinylWrap.addEventListener('mouseleave', () => setOpen(false));
+
+      // Mobile: tap sleeve to toggle; tap record when open to close
+      sleeve.addEventListener('click', () => setOpen(!isOpen));
 
       let dragging = false, centerX = 0, centerY = 0;
       let lastAngle = 0, lastT = 0, angularVelocity = 0, momentumFrame = null;
